@@ -51,7 +51,6 @@ while cap.isOpened():
             #drawing a circle on the index finger(s)
             cv2.circle(frame, (x, y), 10, (0, 0, 0), -1)
 
-
             #index dip
             index_dip=hand_landmarks[7]
             index_dip_x=int(index_dip.x*w)
@@ -99,6 +98,14 @@ while cap.isOpened():
             wrist_x=int(wrist.x*w)
             wrist_y=int(wrist.y*h)
             cv2.circle(frame, (wrist_x, wrist_y), 10, (0, 0, 0), -1)
+
+            #connecting the hand landmarks
+                            #(x,y of thumb tip)        (x,y of thumb ip)
+            cv2.line(frame, (thumb_tip_x, thumb_tip_y), (thumb_ip_x, thumb_ip_y), (0, 255, 0), 2)  #4 - 3
+            cv2.line(frame, (thumb_ip_x, thumb_ip_y), (thumb_mcp_x, thumb_mcp_y), (0, 255, 0), 2)  #3 - 2
+            cv2.line(frame, (thumb_mcp_x, thumb_mcp_y), (thumb_cmc_x, thumb_cmc_y), (0, 255, 0), 2)  #2 - 1
+            cv2.line(frame, (thumb_cmc_x, thumb_cmc_y), (wrist_x, wrist_y), (0, 255, 0), 2)  #1 - 0
+
 
 
 
