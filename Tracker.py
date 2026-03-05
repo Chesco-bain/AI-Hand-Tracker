@@ -148,6 +148,32 @@ while cap.isOpened():
             ring_mcp_y=int(ring_mcp.y*h)
             cv2.circle(frame, (ring_mcp_x, ring_mcp_y), 10, (0, 0, 0), -1)
 
+            #pinky_tip
+            pinky_tip=hand_landmarks[20]
+            pinky_tip_x=int(pinky_tip.x*w)
+            pinky_tip_y=int(pinky_tip.y*h)
+            cv2.circle(frame, (pinky_tip_x, pinky_tip_y), 10, (0, 0, 0), -1)
+
+            #pinky_dip
+            pinky_dip=hand_landmarks[19]
+            pinky_dip_x=int(pinky_dip.x*w)
+            pinky_dip_y=int(pinky_dip.y*h)
+            cv2.circle(frame, (pinky_dip_x, pinky_dip_y), 10, (0, 0, 0), -1)
+
+            #pinky_pip
+            pinky_pip=hand_landmarks[18]
+            pinky_pip_x=int(pinky_pip.x*w)
+            pinky_pip_y=int(pinky_pip.y*h)
+            cv2.circle(frame, (pinky_pip_x, pinky_pip_y), 10, (0, 0, 0), -1)
+
+            #pinky_mcp
+            pinky_mcp=hand_landmarks[17]
+            pinky_mcp_x=int(pinky_mcp.x*w)
+            pinky_mcp_y=int(pinky_mcp.y*h)
+            cv2.circle(frame, (pinky_mcp_x, pinky_mcp_y), 10, (0, 0, 0), -1)
+
+        
+
 
 
 
@@ -181,6 +207,13 @@ while cap.isOpened():
             cv2.line(frame, (ring_pip_x, ring_pip_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #14 - 13
             cv2.line(frame, (middle_mcp_x, middle_mcp_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #9 - 13
             cv2.line(frame, (wrist_x, wrist_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #0 - 13
+
+            #pinky
+            cv2.line(frame, (pinky_tip_x, pinky_tip_y), (pinky_dip_x, pinky_dip_y), (0, 255, 0), 2)  #20 - 19
+            cv2.line(frame, (pinky_pip_x, pinky_pip_y), (pinky_dip_x, pinky_dip_y), (0, 255, 0), 2)  #18 - 19
+            cv2.line(frame, (pinky_pip_x, pinky_pip_y), (pinky_mcp_x, pinky_mcp_y), (0, 255, 0), 2)  #18 - 17
+            cv2.line(frame, (ring_mcp_x, ring_mcp_y), (pinky_mcp_x, pinky_mcp_y), (0, 255, 0), 2)  #13 - 17
+            cv2.line(frame, (wrist_x, wrist_y), (pinky_mcp_x, pinky_mcp_y), (0, 255, 0), 2)  #0 - 17
 
 
 
