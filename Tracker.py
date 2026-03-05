@@ -43,13 +43,42 @@ while cap.isOpened():
         #loops though each detected hand
         for hand_landmarks in results.hand_landmarks:
             # Getting the index finger (check mediapip documentation for landmark points)
+            #https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker 
             index_tip = hand_landmarks[8]
-
             # Getting the x and y co-ords 
             x= int(index_tip.x * w)
             y=int(index_tip.y * h)
             #drawing a circle on the index finger(s)
-            cv2.circle(frame, (x, y), 10, (255, 0, 255), -1)
+            cv2.circle(frame, (x, y), 10, (0, 0, 0), -1)
+
+            #thumb tip
+            thumb_tip=hand_landmarks[4]
+            thumb_tip_x=int(thumb_tip.x*w)
+            thumb_tip_y=int(thumb_tip.y*h)
+            cv2.circle(frame, (thumb_tip_x, thumb_tip_y), 10, (0, 0, 0), -1)
+
+            #thumb ip
+            thumb_ip=hand_landmarks[3]
+            thumb_ip_x=int(thumb_ip.x*w)
+            thumb_ip_y=int(thumb_ip.y*h)
+            cv2.circle(frame, (thumb_ip_x, thumb_ip_y), 10, (0, 0, 0), -1)
+
+            #thumb mcp
+            thumb_mcp=hand_landmarks[2]
+            thumb_mcp_x=int(thumb_mcp.x*w)
+            thumb_mcp_y=int(thumb_mcp.y*h)
+            cv2.circle(frame, (thumb_mcp_x, thumb_mcp_y), 10, (0, 0, 0), -1)
+
+            #thumb cmc
+            thumb_cmc=hand_landmarks[1]
+            thumb_cmc_x=int(thumb_cmc.x*w)
+            thumb_cmc_y=int(thumb_cmc.y*h)
+            cv2.circle(frame, (thumb_cmc_x, thumb_cmc_y), 10, (0, 0, 0), -1)
+
+
+
+
+
     #show the processed frame with drawings
     cv2.imshow("index finger track", frame)
 
