@@ -51,6 +51,25 @@ while cap.isOpened():
             #drawing a circle on the index finger(s)
             cv2.circle(frame, (x, y), 10, (0, 0, 0), -1)
 
+
+            #index dip
+            index_dip=hand_landmarks[7]
+            index_dip_x=int(index_dip.x*w)
+            index_dip_y=int(index_dip.y*h)
+            cv2.circle(frame, (index_dip_x, index_dip_y), 10, (0, 0, 0), -1)
+
+            #index pip
+            index_pip=hand_landmarks[6]
+            index_pip_x=int(index_pip.x*w)
+            index_pip_y=int(index_pip.y*h)
+            cv2.circle(frame, (index_pip_x, index_pip_y), 10, (0, 0, 0), -1)
+
+            #index mcp
+            index_mcp=hand_landmarks[5]
+            index_mcp_x=int(index_mcp.x*w)
+            index_mcp_y=int(index_mcp.y*h)
+            cv2.circle(frame, (index_mcp_x, index_mcp_y), 10, (0, 0, 0), -1)
+
             #thumb tip
             thumb_tip=hand_landmarks[4]
             thumb_tip_x=int(thumb_tip.x*w)
@@ -74,6 +93,13 @@ while cap.isOpened():
             thumb_cmc_x=int(thumb_cmc.x*w)
             thumb_cmc_y=int(thumb_cmc.y*h)
             cv2.circle(frame, (thumb_cmc_x, thumb_cmc_y), 10, (0, 0, 0), -1)
+
+            #wrist
+            wrist=hand_landmarks[0]
+            wrist_x=int(wrist.x*w)
+            wrist_y=int(wrist.y*h)
+            cv2.circle(frame, (wrist_x, wrist_y), 10, (0, 0, 0), -1)
+
 
 
 
