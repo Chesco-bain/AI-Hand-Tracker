@@ -99,12 +99,21 @@ while cap.isOpened():
             wrist_y=int(wrist.y*h)
             cv2.circle(frame, (wrist_x, wrist_y), 10, (0, 0, 0), -1)
 
-            #connecting the hand landmarks
+            #connecting the hand landmarks (refer to the documentation for the numbers)
+            #thumb
                             #(x,y of thumb tip)        (x,y of thumb ip)
             cv2.line(frame, (thumb_tip_x, thumb_tip_y), (thumb_ip_x, thumb_ip_y), (0, 255, 0), 2)  #4 - 3
             cv2.line(frame, (thumb_ip_x, thumb_ip_y), (thumb_mcp_x, thumb_mcp_y), (0, 255, 0), 2)  #3 - 2
             cv2.line(frame, (thumb_mcp_x, thumb_mcp_y), (thumb_cmc_x, thumb_cmc_y), (0, 255, 0), 2)  #2 - 1
             cv2.line(frame, (thumb_cmc_x, thumb_cmc_y), (wrist_x, wrist_y), (0, 255, 0), 2)  #1 - 0
+
+
+            #Index
+            cv2.line(frame, (x, y), (index_dip_x, index_dip_y), (0, 255, 0), 2)  #8 - 7
+            cv2.line(frame, (index_dip_x, index_dip_y), (index_pip_x, index_pip_y), (0, 255, 0), 2)  #7 - 6
+            cv2.line(frame, (index_pip_x, index_pip_y), (index_mcp_x, index_mcp_y), (0, 255, 0), 2)  #6 - 5
+            cv2.line(frame, (index_mcp_x, index_mcp_y), (wrist_x, wrist_y), (0, 255, 0), 2)  #5 - 0
+
 
 
 
