@@ -99,6 +99,60 @@ while cap.isOpened():
             wrist_y=int(wrist.y*h)
             cv2.circle(frame, (wrist_x, wrist_y), 10, (0, 0, 0), -1)
 
+
+            #middle tip
+            middle_tip=hand_landmarks[12]
+            middle_tip_x=int(middle_tip.x*w)
+            middle_tip_y=int(middle_tip.y*h)
+            cv2.circle(frame, (middle_tip_x, middle_tip_y), 10, (0, 0, 0), -1)
+
+            #middle dip
+            middle_dip=hand_landmarks[11]
+            middle_dip_x=int(middle_dip.x*w)
+            middle_dip_y=int(middle_dip.y*h)
+            cv2.circle(frame, (middle_dip_x, middle_dip_y), 10, (0, 0, 0), -1)
+
+            #middle pip
+            middle_pip=hand_landmarks[10]
+            middle_pip_x=int(middle_pip.x*w)
+            middle_pip_y=int(middle_pip.y*h)
+            cv2.circle(frame, (middle_pip_x, middle_pip_y), 10, (0, 0, 0), -1)
+
+            #middle mcp
+            middle_mcp=hand_landmarks[9]
+            middle_mcp_x=int(middle_mcp.x*w)
+            middle_mcp_y=int(middle_mcp.y*h)
+            cv2.circle(frame, (middle_mcp_x, middle_mcp_y), 10, (0, 0, 0), -1)
+
+            #ring tip
+            ring_tip=hand_landmarks[16]
+            ring_tip_x=int(ring_tip.x*w)
+            ring_tip_y=int(ring_tip.y*h)
+            cv2.circle(frame, (ring_tip_x, ring_tip_y), 10, (0, 0, 0), -1)
+
+            #ring dip
+            ring_dip=hand_landmarks[15]
+            ring_dip_x=int(ring_dip.x*w)
+            ring_dip_y=int(ring_dip.y*h)
+            cv2.circle(frame, (ring_dip_x, ring_dip_y), 10, (0, 0, 0), -1)
+
+            #ring pip
+            ring_pip=hand_landmarks[14]
+            ring_pip_x=int(ring_pip.x*w)
+            ring_pip_y=int(ring_pip.y*h)
+            cv2.circle(frame, (ring_pip_x, ring_pip_y), 10, (0, 0, 0), -1)
+
+            #ring mcp
+            ring_mcp=hand_landmarks[13]
+            ring_mcp_x=int(ring_mcp.x*w)
+            ring_mcp_y=int(ring_mcp.y*h)
+            cv2.circle(frame, (ring_mcp_x, ring_mcp_y), 10, (0, 0, 0), -1)
+
+
+
+
+
+
             #connecting the hand landmarks (refer to the documentation for the numbers)
             #thumb
                             #(x,y of thumb tip)        (x,y of thumb ip)
@@ -106,13 +160,28 @@ while cap.isOpened():
             cv2.line(frame, (thumb_ip_x, thumb_ip_y), (thumb_mcp_x, thumb_mcp_y), (0, 255, 0), 2)  #3 - 2
             cv2.line(frame, (thumb_mcp_x, thumb_mcp_y), (thumb_cmc_x, thumb_cmc_y), (0, 255, 0), 2)  #2 - 1
             cv2.line(frame, (thumb_cmc_x, thumb_cmc_y), (wrist_x, wrist_y), (0, 255, 0), 2)  #1 - 0
+            cv2.line(frame, (thumb_cmc_x, thumb_cmc_y), (index_mcp_x, index_mcp_y), (0, 255, 0), 2)  #1 - 5
 
-
-            #Index
+            #index
             cv2.line(frame, (x, y), (index_dip_x, index_dip_y), (0, 255, 0), 2)  #8 - 7
             cv2.line(frame, (index_dip_x, index_dip_y), (index_pip_x, index_pip_y), (0, 255, 0), 2)  #7 - 6
             cv2.line(frame, (index_pip_x, index_pip_y), (index_mcp_x, index_mcp_y), (0, 255, 0), 2)  #6 - 5
             cv2.line(frame, (index_mcp_x, index_mcp_y), (wrist_x, wrist_y), (0, 255, 0), 2)  #5 - 0
+
+            #middle
+            cv2.line(frame, (middle_tip_x, middle_tip_y), (middle_dip_x, middle_dip_y), (0, 255, 0), 2)  #12 - 11
+            cv2.line(frame, (middle_dip_x, middle_dip_y), (middle_pip_x, middle_pip_y), (0, 255, 0), 2)  #11 - 10
+            cv2.line(frame, (middle_pip_x, middle_pip_y), (middle_mcp_x, middle_mcp_y), (0, 255, 0), 2)  #10 - 9
+            cv2.line(frame, (index_mcp_x, index_mcp_y), (middle_mcp_x, middle_mcp_y), (0, 255, 0), 2)  #5 - 9
+            cv2.line(frame, (wrist_x, wrist_y), (middle_mcp_x, middle_mcp_y), (0, 255, 0), 2)  #0 - 9
+
+            #ring
+            cv2.line(frame, (ring_tip_x, ring_tip_y), (ring_dip_x, ring_dip_y), (0, 255, 0), 2)  #16 - 15
+            cv2.line(frame, (ring_pip_x, ring_pip_y), (ring_dip_x, ring_dip_y), (0, 255, 0), 2)  #14 - 15
+            cv2.line(frame, (ring_pip_x, ring_pip_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #14 - 13
+            cv2.line(frame, (middle_mcp_x, middle_mcp_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #9 - 13
+            cv2.line(frame, (wrist_x, wrist_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #0 - 13
+
 
 
 
