@@ -173,12 +173,6 @@ while cap.isOpened():
             cv2.circle(frame, (pinky_mcp_x, pinky_mcp_y), 10, (0, 0, 0), -1)
 
         
-
-
-
-
-
-
             #connecting the hand landmarks (refer to the documentation for the numbers)
             #thumb
                             #(x,y of thumb tip)        (x,y of thumb ip)
@@ -186,7 +180,7 @@ while cap.isOpened():
             cv2.line(frame, (thumb_ip_x, thumb_ip_y), (thumb_mcp_x, thumb_mcp_y), (0, 255, 0), 2)  #3 - 2
             cv2.line(frame, (thumb_mcp_x, thumb_mcp_y), (thumb_cmc_x, thumb_cmc_y), (0, 255, 0), 2)  #2 - 1
             cv2.line(frame, (thumb_cmc_x, thumb_cmc_y), (wrist_x, wrist_y), (0, 255, 0), 2)  #1 - 0
-            cv2.line(frame, (thumb_cmc_x, thumb_cmc_y), (index_mcp_x, index_mcp_y), (0, 255, 0), 2)  #1 - 5
+            #cv2.line(frame, (thumb_cmc_x, thumb_cmc_y), (index_mcp_x, index_mcp_y), (0, 255, 0), 2)  #1 - 5
 
             #index
             cv2.line(frame, (x, y), (index_dip_x, index_dip_y), (0, 255, 0), 2)  #8 - 7
@@ -199,14 +193,14 @@ while cap.isOpened():
             cv2.line(frame, (middle_dip_x, middle_dip_y), (middle_pip_x, middle_pip_y), (0, 255, 0), 2)  #11 - 10
             cv2.line(frame, (middle_pip_x, middle_pip_y), (middle_mcp_x, middle_mcp_y), (0, 255, 0), 2)  #10 - 9
             cv2.line(frame, (index_mcp_x, index_mcp_y), (middle_mcp_x, middle_mcp_y), (0, 255, 0), 2)  #5 - 9
-            cv2.line(frame, (wrist_x, wrist_y), (middle_mcp_x, middle_mcp_y), (0, 255, 0), 2)  #0 - 9
+            #cv2.line(frame, (wrist_x, wrist_y), (middle_mcp_x, middle_mcp_y), (0, 255, 0), 2)  #0 - 9
 
             #ring
             cv2.line(frame, (ring_tip_x, ring_tip_y), (ring_dip_x, ring_dip_y), (0, 255, 0), 2)  #16 - 15
             cv2.line(frame, (ring_pip_x, ring_pip_y), (ring_dip_x, ring_dip_y), (0, 255, 0), 2)  #14 - 15
             cv2.line(frame, (ring_pip_x, ring_pip_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #14 - 13
             cv2.line(frame, (middle_mcp_x, middle_mcp_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #9 - 13
-            cv2.line(frame, (wrist_x, wrist_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #0 - 13
+            #cv2.line(frame, (wrist_x, wrist_y), (ring_mcp_x, ring_mcp_y), (0, 255, 0), 2)  #0 - 13
 
             #pinky
             cv2.line(frame, (pinky_tip_x, pinky_tip_y), (pinky_dip_x, pinky_dip_y), (0, 255, 0), 2)  #20 - 19
@@ -214,14 +208,6 @@ while cap.isOpened():
             cv2.line(frame, (pinky_pip_x, pinky_pip_y), (pinky_mcp_x, pinky_mcp_y), (0, 255, 0), 2)  #18 - 17
             cv2.line(frame, (ring_mcp_x, ring_mcp_y), (pinky_mcp_x, pinky_mcp_y), (0, 255, 0), 2)  #13 - 17
             cv2.line(frame, (wrist_x, wrist_y), (pinky_mcp_x, pinky_mcp_y), (0, 255, 0), 2)  #0 - 17
-
-
-
-
-
-
-
-
 
     #show the processed frame with drawings
     cv2.imshow("index finger track", frame)
