@@ -22,6 +22,7 @@ detector = vision.HandLandmarker.create_from_options(options)
 
 #opening a camera
 cap = cv2.VideoCapture(0)
+#t
 
 
 while cap.isOpened():
