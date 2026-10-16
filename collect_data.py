@@ -45,14 +45,18 @@ samples = []
 if os.path.exists(DATA_FILE):
     with open(DATA_FILE) as f:
         for row in csv.reader(f):
-            samples.append((int(row[0]), [float(x) for x in row[1:]]))
+            samples.append((row[0], [float(x) for x in row[1:]]))
     print(f"Loaded {len(samples)} existing samples.")
 
-counts = {i: 0 for i in range(10)}
+# Counts for display
+counts = {}
 for lbl, _ in samples:
-    counts[lbl] += 1
+    counts[lbl] = counts.get(lbl, 0) + 1
 
-print("Hold a handshape and press 0-9 to save. Backspace=undo, q=quit&save.")
+print("Hold a handshape and press a key to save:")
+print("  Numbers: 0-9")
+print("  Letters: A-Z  (use Shift+letter for uppercase)")
+print("Backspace=undo, q=quit&save.")
 
 cap = cv2.VideoCapture(0)
 while cap.isOpened():
@@ -72,25 +76,43 @@ while cap.isOpened():
             cv2.circle(frame, tuple(p.astype(int)), 5, (0,0,0), -1)
         feats = extract_features(pts)
 
+    # Display total and per-label counts (numbers + letters)
     cv2.putText(frame, f"Total: {sum(counts.values())}", (10, 30),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2)
-    for i in range(10):
-        cv2.putText(frame, f"{i}: {counts[i]}", (10, 65 + i*25),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255,255,255), 1)
+    # Show counts in two columns
+    items = sorted(counts.items())
+    for i, (lbl, cnt) in enumerate(items):
+        col = i // 20
+        row = i % 20
+        cv2.putText(frame, f"{lbl}: {cnt}", (10 + col*120, 65 + row*22),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
 
-    cv2.imshow('Collect SASL data', frame)
+    cv2.imshow('Collect SASL data (numbers + alphabet)', frame)
     key = cv2.waitKey(1) & 0xFF
 
     if key == ord('q'):
         break
     elif ord('0') <= key <= ord('9') and feats is not None:
-        lbl = key - ord('0')
+        lbl = chr(key)  # '0'-'9' as string
         samples.append((lbl, feats))
-        counts[lbl] += 1
+        counts[lbl] = counts.get(lbl, 0) + 1
+        print(f"Saved {lbl}  (total for {lbl}: {counts[lbl]})")
+    elif ord('a') <= key <= ord('z') and feats is not None:
+        lbl = chr(key - 32)  # convert to uppercase letter
+        samples.append((lbl, feats))
+        counts[lbl] = counts.get(lbl, 0) + 1
+        print(f"Saved {lbl}  (total for {lbl}: {counts[lbl]})")
+    elif ord('A') <= key <= ord('Z') and feats is not None:
+        # Some systems send uppercase directly with Shift
+        lbl = chr(key)
+        samples.append((lbl, feats))
+        counts[lbl] = counts.get(lbl, 0) + 1
         print(f"Saved {lbl}  (total for {lbl}: {counts[lbl]})")
     elif key == 8 and samples:
         lbl, _ = samples.pop()
         counts[lbl] -= 1
+        if counts[lbl] == 0:
+            del counts[lbl]
         print(f"Undid last sample for {lbl}")
 
 cap.release()
