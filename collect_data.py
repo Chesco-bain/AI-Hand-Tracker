@@ -19,7 +19,7 @@ SKELETON = [
 base_options = python.BaseOptions(model_asset_path=MODEL_PATH)
 options = vision.HandLandmarkerOptions(
     base_options=base_options, num_hands=1,
-    min_hand_detection_confidence=0.4,
+    min_hand_detection_confidence=0.5,
     min_hand_presence_confidence=0.5,
     min_tracking_confidence=0.8,
 )
@@ -56,7 +56,7 @@ for lbl, _ in samples:
 print("Hold a handshape and press a key to save:")
 print("  Numbers: 0-9")
 print("  Letters: A-Z  (use Shift+letter for uppercase)")
-print("Backspace=undo, q=quit&save.")
+print("Backspace=undo, Esc=quit&save.")
 
 cap = cv2.VideoCapture(0)
 while cap.isOpened():
@@ -90,7 +90,7 @@ while cap.isOpened():
     cv2.imshow('Collect SASL data (numbers + alphabet)', frame)
     key = cv2.waitKey(1) & 0xFF
 
-    if key == ord('q'):
+    if key == 27:
         break
     elif ord('0') <= key <= ord('9') and feats is not None:
         lbl = chr(key)  # '0'-'9' as string
