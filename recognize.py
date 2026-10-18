@@ -36,6 +36,14 @@ def extract_features(pts):
     R = np.array([[c, -s], [s, c]])
     return ((pts - wrist) @ R.T / size).flatten()
 
+# Dictionary to map predicted class to display text
+DISPLAY_MAP = {
+    '0': 'O / 0',
+    'O': 'O / 0',
+    '2': 'V / 2',
+    'V': 'V / 2'
+}
+
 cap = cv2.VideoCapture(0)
 history = deque(maxlen=SMOOTH_N)
 
@@ -53,7 +61,29 @@ while cap.isOpened():
     if results.hand_landmarks:
         pts = to_pixels(results.hand_landmarks[0], w, h)
         feats = extract_features(pts).reshape(1, -1)
+        
         probs = clf.predict_proba(feats)[0]
+        classes = clf.classes_
+        
+        # --- Combine probabilities for identical handshapes ---
+        # Find indices for O, 0, V, 2
+        idx_0 = np.where(classes == '0')[0]
+        idx_O = np.where(classes == 'O')[0]
+        idx_2 = np.where(classes == '2')[0]
+        idx_V = np.where(classes == 'V')[0]
+
+        # Sum and assign combined probability to both so whichever gets picked has the full confidence
+        if len(idx_0) > 0 and len(idx_O) > 0:
+            combined_O0 = probs[idx_0[0]] + probs[idx_O[0]]
+            probs[idx_0[0]] = combined_O0
+            probs[idx_O[0]] = combined_O0
+
+        if len(idx_2) > 0 and len(idx_V) > 0:
+            combined_V2 = probs[idx_2[0]] + probs[idx_V[0]]
+            probs[idx_2[0]] = combined_V2
+            probs[idx_V[0]] = combined_V2
+        # ------------------------------------------------------
+
         idx = int(np.argmax(probs))
         confidence = float(probs[idx])
         predicted = clf.classes_[idx]
@@ -63,11 +93,17 @@ while cap.isOpened():
     stable = Counter(valid).most_common(1)[0][0] if len(valid) >= SMOOTH_N * 0.6 else None
 
     if stable is not None:
-        cv2.rectangle(frame, (10, 10), (200, 130), (0, 0, 0), -1)
-        font_scale = 3.0 if stable.isdigit() else 2.5
-        cv2.putText(frame, stable, (55, 100),
+        # Map the raw label to our display text
+        display_text = DISPLAY_MAP.get(str(stable), str(stable))
+        
+        cv2.rectangle(frame, (10, 10), (250, 130), (0, 0, 0), -1)
+        
+        # Adjust font size for multi-character strings like "O / 0"
+        font_scale = 3.0 if len(display_text) == 1 else 1.8
+        
+        cv2.putText(frame, display_text, (25, 100),
                     cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 255, 255), 6, cv2.LINE_AA)
-        cv2.putText(frame, f"{confidence:.0%}", (140, 120),
+        cv2.putText(frame, f"{confidence:.0%}", (180, 120),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 1)
 
     cv2.imshow('SASL numbers + alphabet (trained)', frame)
