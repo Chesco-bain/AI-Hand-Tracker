@@ -13,8 +13,11 @@ print(df[0].value_counts().sort_index())
 
 X = df.iloc[:, 1:].values
 y = df.iloc[:, 0].values
-
+#RandomForrestClassifier (Enhanced Decision tree)
 clf = RandomForestClassifier(n_estimators=200, max_depth=20, random_state=42)
+#n_estimators - the number trees in the forest
+#max_depth - the maximum depth of the tree( how many grandchildren should it stop at)
+#random_state - controls the randomness
 
 scores = cross_val_score(clf, X, y, cv=5)
 print(f"Cross-validation accuracy: {scores.mean():.1%} (+/- {scores.std():.1%})")

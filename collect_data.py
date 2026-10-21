@@ -10,12 +10,14 @@ MODEL_PATH = 'hand_landmarker.task'
 DATA_FILE  = 'hand_data.csv'
 
 WRIST, MIDDLE_MCP = 0, 9
+#Building the skeleton using hand landmarks
 SKELETON = [
     (0,1),(1,2),(2,3),(3,4), (0,5),(5,6),(6,7),(7,8),
     (5,9),(9,10),(10,11),(11,12), (9,13),(13,14),(14,15),(15,16),
     (13,17),(17,18),(18,19),(19,20), (0,17),
 ]
 
+#SETTINGS for the mediapipe (Can be tweaked based on some letters)
 base_options = python.BaseOptions(model_asset_path=MODEL_PATH)
 options = vision.HandLandmarkerOptions(
     base_options=base_options, num_hands=1,
