@@ -41,13 +41,13 @@ def extract_features(pts):
 DISPLAY_MAP = {
     '0': 'O / 0', 'O': 'O / 0',
     '2': 'V / 2', 'V': 'V / 2',
+    '7': 'L / 7', 'L': 'L / 7',
 }
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-# Create resizable window once (required before toggling fullscreen)
 cv2.namedWindow(WINDOW_NAME, cv2.WINDOW_NORMAL)
 is_fullscreen = False
 
@@ -75,7 +75,7 @@ while cap.isOpened():
             probs   = clf.predict_proba(feats)[0]
             classes = clf.classes_
 
-            for pair in (('0', 'O'), ('2', 'V')):
+            for pair in (('0', 'O'), ('2', 'V'), ('7', 'L')):
                 idxs = []
                 for ch in pair:
                     full = f"{prefix}_{ch}"
